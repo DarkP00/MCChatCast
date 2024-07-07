@@ -1,0 +1,8 @@
+{
+    "commands": {
+        "ls" : "list",
+        "tps" : "tps",
+        "time" : "gametime",
+        "Hi" : "Say @a __player__ is in the discord"
+    }
+}
