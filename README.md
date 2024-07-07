@@ -1,4 +1,4 @@
-Using Paramiko for SSH aaccsess and MCRcon for get responce from mc console.
+Using asyncssh for SSH accsess and MCRcon for get responce from mc console.
 
 Minecraft End:
 

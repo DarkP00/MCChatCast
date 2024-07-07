@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-import paramiko
+import asyncssh
 import mcrcon
 import os
 import json
