@@ -1,16 +1,12 @@
 import discord
 from discord.ext import commands
-import mcrcon
-from mcrcon import MCRcon
 import os
 import json
 
 #informations
 Bot_Token = ''
 
-Rcon_Host = ''
-Rcon_Pass = ''
-Rcon_Port = ''
+
 
 #reding valid cmds
 with open('Asstes/cmd.json', 'r') as cmd:
@@ -41,10 +37,8 @@ async def on_message(message):
                 commands.replace("__player__", author)
         print(f"\033[32m{commands}\033[0m")
 
-        # Opening SSH and Writing commands
-        with MCRcon(Rcon_Host, Rcon_Pass, port=Rcon_Port) as comm:
-            result = comm.command(commands)
-            print(result)
+        # print commands veriable in your minecraft consol
+        os.system(f'screen -S minecraft -X stuff "{commands}^M"')
 
 # Message discord to server
 @bot.event
@@ -57,34 +51,14 @@ async def on_message(message):
         author = message.author
         await print(f"\033[32m{author} sent the message {contents}\033[0m")
 
-        # Opening SSH and Writing commands
-        with mcrcon(Rcon_Host, Rcon_Pass, port=Rcon_Port) as comm:
-            result = comm.command(f"say @a {author} said, {contents}")
-            await print(result)
+        # this a mechanic to send discord msg to in game chat using console
+        os.system(f'screen -S minecraft -X stuff "say @a In discord chat {author} Said: {contents}^M"')
+        
 
 # Copy and Prossess the chat
-def chat_prossess(response):
-    messages = []
-    lines = response.split('\n')
-    for line in lines:
-        if 'INFO' in line and '<' in line and '>' in line:
-            timestamp, content = line.split('INFO]: ')
-            messages.append(content)
-    return messages
+# Get and Prosses your massage here
 
-# Send Chat to Discord with mcrcon
-def send_chet_to_discord():
-    try:
-        with MCRcon(Rcon_Host, Rcon_Pass, port=Rcon_Port) as comm:
-            response = comm.command(LOG_COMMAND)
-            messages = chat_prossess(response)
-            for message in messages:
-                message.channel.send(message)
-    except Exception as e:
-        print(f"erorr: {e}")
-
-# Run send_chet_to_discord ficntion
-if __name__ == "__send_chet_to_discord__":
-    send_chet_to_discord()
+# Send Chat message to Discord chennel
+# message.channel.send(message)
 
 bot.run(Bot_Token)
